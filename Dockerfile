@@ -1,13 +1,31 @@
 # Stage 1
-FROM node:8 as react-build
+ARG NODE_VERSION
+FROM node:${NODE_VERSION} as dev
 WORKDIR /app
-COPY . ./
-RUN yarn
+COPY package*.json ./
+RUN yarn install
+ 
+
+# Dev environment doesn't run this stage or beyond
+FROM dev as prod
+COPY public public/
+COPY src src/
 RUN yarn build
 
+
 # Stage 2 - the production environment
-FROM nginx:alpine
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=react-build /app/build /usr/share/nginx/html
+ARG NGINX_VERSION
+FROM nginx:${NGINX_VERSION}
+#COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=prod /app/build /usr/share/nginx/html
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]; \
+
+
+
+
+
+
+
+
+

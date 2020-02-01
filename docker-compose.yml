@@ -1,0 +1,39 @@
+version: "3.7"
+services:
+  react-dev:
+    container_name: react
+    build:
+      # change this to the directory containing the dockerfile if in a different place
+      context: .
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+      target: ${APP_ENV}
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_PORT}:3000"
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+    command: yarn start
+    
+  
+  nginx:
+    image: nginx:${NGINX_VERSION}
+    container_name: nginx
+    ports:
+      - "${NGINX_PORT}:80"
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+    
+      
+    
+      
+  
+    
+
+
+  
+
+ 
+
+   
