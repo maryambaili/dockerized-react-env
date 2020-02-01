@@ -1,5 +1,6 @@
 # Stage 1
 ARG NODE_VERSION
+ARG APP_ENV
 FROM node:${NODE_VERSION} as dev
 WORKDIR /app
 COPY package*.json ./
