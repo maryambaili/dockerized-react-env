@@ -7,7 +7,7 @@ services:
       context: .
       args:
         NODE_VERSION: ${NODE_VERSION}
-      target: dev
+      target: ${ENV}
       dockerfile: Dockerfile
     ports:
       - "${APP_PORT}:3000"
