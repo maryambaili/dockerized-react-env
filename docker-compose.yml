@@ -9,6 +9,7 @@ services:
         NODE_VERSION: ${NODE_VERSION}
       target: ${APP_ENV}
       dockerfile: Dockerfile
+    restart: on-failure
     ports:
       - "${APP_PORT}:3000"
     volumes:
@@ -21,6 +22,7 @@ services:
   
   nginx:
     image: nginx:${NGINX_VERSION}
+    restart: on-failure
     container_name: nginx
     ports:
       - "${NGINX_PORT}:80"
